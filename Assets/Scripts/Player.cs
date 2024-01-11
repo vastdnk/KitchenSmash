@@ -19,14 +19,20 @@ public class Player : MonoBehaviour
 
 
 
+        float moveDistance = moveSpeed * Time.deltaTime;
+        float playerRadius = .7f;
+        float playerHeight = 2f;
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
-        float playerSize = .7f;
-        bool canMove = !Physics.Raycast(transform.position, moveDir, playerSize);
 
+        if (!canMove)
+        {
+
+        }
 
         if (canMove)
         {
-            transform.position += moveDir * moveSpeed * Time.deltaTime;
+            transform.position += moveDir * moveDistance;
         }
 
         
