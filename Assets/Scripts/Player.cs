@@ -26,27 +26,27 @@ public class Player : MonoBehaviour
 
 
         if (!canMove)
-        {
-            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
+        {   
+            //не может двигаться на moveDir
+
+            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
             canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
             if (canMove)
             {
                 moveDir = moveDirX;
+
             } else {
-                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
+                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
                 if (canMove)
                 {
+                    //не может двигаться на Z
                     moveDir = moveDirZ;
+                } else {
+                    //не может двигаться ни в одном направлении
                 }
-                else
-                {
-
-                }
-
-
             }
 
             
