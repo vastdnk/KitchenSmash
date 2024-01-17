@@ -8,12 +8,41 @@ public class Player : MonoBehaviour
     public float moveSpeed = 2f;
 
     private bool isWalking;
+    private Vector3 lastInteractDir;
 
     [SerializeField] private GameInput gameInput;
 
     private void Update()
     {
 
+        HandleMovement();
+        HandleInteractions();
+ 
+    }
+    public void HandleInteractions()
+    {
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+        RaycastHit raycastHit;
+
+
+        if(moveDir != Vector3.zero)
+        {
+            lastInteractDir = moveDir;
+        }
+        float interactDistance = 2f;
+        if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit, interactDistance)) {
+            Debug.Log(raycastHit.transform);
+        }
+        else
+        {
+            Debug.Log("-");
+        }
+    }
+
+
+    public void HandleMovement()
+    {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
@@ -26,7 +55,7 @@ public class Player : MonoBehaviour
 
 
         if (!canMove)
-        {   
+        {
             //не может двигаться на moveDir
 
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
@@ -36,7 +65,9 @@ public class Player : MonoBehaviour
             {
                 moveDir = moveDirX;
 
-            } else {
+            }
+            else
+            {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
                 canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
@@ -44,12 +75,14 @@ public class Player : MonoBehaviour
                 {
                     //не может двигаться на Z
                     moveDir = moveDirZ;
-                } else {
+                }
+                else
+                {
                     //не может двигаться ни в одном направлении
                 }
             }
 
-            
+
 
         }
 
@@ -58,16 +91,17 @@ public class Player : MonoBehaviour
             transform.position += moveDir * moveDistance;
         }
 
-        
+
 
         isWalking = moveDir != Vector3.zero;
 
         float rotateSpeed = 10f;
 
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
-
-        
     }
-    public bool IsWalking() { return isWalking; }
+
+    public bool IsWalking() { 
+        return isWalking; 
+    }
 
 }
