@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Vector3 lastInteractDir;
 
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private LayerMask countersLayerMask;
 
     private void Update()
     {
@@ -31,12 +32,13 @@ public class Player : MonoBehaviour
             lastInteractDir = moveDir;
         }
         float interactDistance = 2f;
-        if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit, interactDistance)) {
-            Debug.Log(raycastHit.transform);
-        }
-        else
-        {
-            Debug.Log("-");
+        if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit, interactDistance, countersLayerMask)) {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                //has ClearCounter
+                clearCounter.Interact();
+            }
+     
         }
     }
 
