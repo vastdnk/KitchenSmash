@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391242b3c6bea1b4c88904ff9a02f0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tomatoPrefab: {fileID: 5551196955462273865, guid: 46985e5f8b106324f89e7eeef5d583a5,
+    type: 3}
+  counterTopPoint: {fileID: 5933322329785869277}
 --- !u!65 &2099282200686282351
 BoxCollider:
   m_ObjectHideFlags: 0
