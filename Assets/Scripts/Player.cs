@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
                 //has ClearCounter
-                clearCounter.Interact();
+                //clearCounter.Interact();
             }
 
         }
